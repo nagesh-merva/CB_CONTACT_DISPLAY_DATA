@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <div class="header">
+        <div class="title">CHEFSBHOJAN</div>
+        <h1>Contact Details for Availing Discount</h1>
+    </div>
+    <div class="container">
+        <form method="post" action="/">
+            <input type="text" name="query" placeholder="Search by name or phone" value="{{ query }}" class="search-bar">
+            <button type="submit" class="search-button">Search</button>
+        </form>
+        <table class="contacts-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Date Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contact in contacts %}
+                <tr>
+                    <td>{{ contact.name }}</td>
+                    <td>{{ contact.phone }}</td>
+                    <td>{{ contact.date_created }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #FFC107;
+    /* Amber-500 */
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.header .title {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.header h1 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar {
+    width: calc(100% - 120px);
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.search-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.contacts-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.contacts-table th,
+.contacts-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.contacts-table th {
+    background-color: #f0f0f0;
+}
+
+.contacts-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
