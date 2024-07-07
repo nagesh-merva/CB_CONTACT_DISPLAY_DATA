@@ -11,7 +11,7 @@ if not MONGODB_URI:
 
 client = MongoClient(
     MONGODB_URI,
-    connectTimeoutMS=60000, 
+    connectTimeoutMS=30000, 
     socketTimeoutMS=None)
 db = client['FORMDATACOLLECTION']
 Details = db['CONTACTS']
