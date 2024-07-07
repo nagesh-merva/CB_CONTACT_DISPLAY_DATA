@@ -12,7 +12,7 @@ db = client['FORMDATACOLLECTION']
 Details = db['CONTACTS']
 
 @app.route('/', methods=['GET', 'POST'])
-def get_contacts():
+def index():
     query = request.form.get('query', '')
     search_filter = {}
 
@@ -25,4 +25,4 @@ def get_contacts():
         }
 
     contacts = list(Details.find(search_filter, {'_id': 0, 'name': 1, 'phone': 1, 'date_created': 1}))
-    return render_template('contacts.html', contacts=contacts, query=query)
+    return render_template('index.html', contacts=contacts, query=query)
