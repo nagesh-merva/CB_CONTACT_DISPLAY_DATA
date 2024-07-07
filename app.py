@@ -4,12 +4,9 @@ from pymongo import MongoClient
 
 app = Flask(__name__)
 
-MONGODB_URI = os.getenv('MONGODB_URI')
-if not MONGODB_URI:
-    raise ValueError("Missing MONGODB_URI environment variable")
 
 client = MongoClient(
-    MONGODB_URI,
+    'mongodb+srv://ChefsBhojan:usX7ZS8kPz4Pv@cluster0.eikei2d.mongodb.net/',
     connectTimeoutMS=30000, 
     socketTimeoutMS=None)
 db = client['FORMDATACOLLECTION']
