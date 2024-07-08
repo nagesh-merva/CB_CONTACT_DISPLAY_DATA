@@ -1,6 +1,7 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 
 app = Flask(__name__)
 
@@ -25,5 +26,15 @@ def index():
             ]
         }
 
-    contacts = list(Details.find(search_filter, {'_id': 0, 'name': 1, 'phone': 1, 'date_created': 1}))
+    contacts = list(Details.find(search_filter, {'_id': 0, 'name': 1, 'phone': 1, 'date_created': 1, 'redeemed': 1}))
     return render_template('index.html', contacts=contacts, query=query)
+
+
+@app.route('/redeem', methods=['POST'])
+def redeem():
+    contact_phone = request.json.get('contact_phone')
+    if not contact_phone:
+        return jsonify({"error": "Contact phone is required"}), 400
+
+    Details.update_one({'phone': contact_phone}, {'$set': {'redeemed': True}})
+    return jsonify({"success": True}), 200

@@ -22,6 +22,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Phone</th>
+                    <th>Status</th>
                     <th>Date Created</th>
                 </tr>
             </thead>
@@ -30,11 +31,37 @@
                 <tr>
                     <td>{{ contact.name }}</td>
                     <td>{{ contact.phone }}</td>
+                    <td>
+                        {% if not contact.redeemed %}
+                            <button onclick="Redeem('{{ contact.phone }}')">Redeem</button>
+                        {% else %}
+                            <span class="fullfilled-message">&#10004; Redeemed</span>
+                        {% endif %}
+                    </td>
                     <td>{{ contact.date_created }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+    <script>
+        function Redeem(contactPhone) {
+            fetch('/redeem', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ contact_phone: contactPhone })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.reload()
+                } else {
+                    alert('Error redeeming contact.')
+                }
+            })
+        }
+    </script>
 </body>
 </html>
