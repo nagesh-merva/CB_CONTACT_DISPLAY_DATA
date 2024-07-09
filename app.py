@@ -26,15 +26,18 @@ def index():
             ]
         }
 
-    contacts = list(Details.find(search_filter, {'_id': 0, 'name': 1, 'phone': 1, 'date_created': 1, 'redeemed': 1}))
+    contacts = list(Details.find(search_filter, {'_id': 0, 'name': 1, 'phone': 1, 'date_created': 1, 'redeemed': 1,'discount':1}))
     return render_template('index.html', contacts=contacts, query=query)
 
 
 @app.route('/redeem', methods=['POST'])
 def redeem():
-    contact_phone = request.json.get('contact_phone')
-    if not contact_phone:
-        return jsonify({"error": "Contact phone is required"}), 400
+    data = request.json
+    contact_phone = data.get('contact_phone')
+    discount = data.get('discount')
 
-    Details.update_one({'phone': contact_phone}, {'$set': {'redeemed': True}})
+    if not contact_phone or not discount:
+        return jsonify({"error": "Contact phone and discount are required"}), 400
+
+    Details.update_one({'phone': contact_phone}, {'$set': {'redeemed': True, 'discount': int(discount)}})
     return jsonify({"success": True}), 200

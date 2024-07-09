@@ -33,9 +33,9 @@
                     <td>{{ contact.phone }}</td>
                     <td>
                         {% if not contact.redeemed %}
-                            <button onclick="Redeem('{{ contact.phone }}')">Redeem</button>
+                            <button onclick="showRedeemModal('{{ contact.phone }}')">Redeem</button>
                         {% else %}
-                            <span class="fullfilled-message">&#10004; Redeemed</span>
+                            <span class="fullfilled-message">&#10004; Redeemed {{ contact.discount}}% discount</span>
                         {% endif %}
                     </td>
                     <td>{{ contact.date_created }}</td>
@@ -44,14 +44,47 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Redeem Modal -->
+    <div id="redeemModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeRedeemModal()">&times;</span>
+            <h2>Select Discount</h2>
+            <form id="redeemForm">
+                <label for="discount">Discount:</label>
+                <select id="discount" name="discount" required>
+                    <option value="">Select</option>
+                    <option value="10">10%</option>
+                    <option value="20">20%</option>
+                    <option value="30">30%</option>
+                    <option value="40">40%</option>
+                </select>
+                <button type="submit">Apply</button>
+            </form>
+        </div>
+    </div>
+
     <script>
-        function Redeem(contactPhone) {
+        let currentContactPhone = null
+
+        function showRedeemModal(contactPhone) {
+            currentContactPhone = contactPhone
+            document.getElementById('redeemModal').style.display = 'block'
+        }
+
+        function closeRedeemModal() {
+            document.getElementById('redeemModal').style.display = 'none'
+        }
+
+        document.getElementById('redeemForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const discount = document.getElementById('discount').value
             fetch('/redeem', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ contact_phone: contactPhone })
+                body: JSON.stringify({ contact_phone: currentContactPhone, discount: discount })
             })
             .then(response => response.json())
             .then(data => {
@@ -61,7 +94,7 @@
                     alert('Error redeeming contact.')
                 }
             })
-        }
+        })
     </script>
 </body>
 </html>
